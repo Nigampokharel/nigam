@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modern Landing Page</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  
+
+
+  <main>
+    <!-- <button class="cta-btn" id="getStartedBtn">Login</button> -->
+  
+  <footer>
+    &copy; 2024 NigamRealm. All rights reserved.
+  </footer>
+
+  <!-- Login Modal -->
+  <div class="modal-bg" id="loginModalBg">
+    <div class="modal">
+      <button class="close-modal" id="closeModalBtn" title="Close">&times;</button>
+      <h2>Login</h2>
+      <form id="loginForm" autocomplete="off">
+        <div>
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" required autofocus>
+        </div>
+        <div>
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required>
+        </div>
+        <div class="error-msg" id="loginError" style="display:none;"></div>
+        <button type="submit" class="login-btn">Login</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="users.js"></script>
+  <script>
+    // Modal logic
+    // const getStartedBtn = document.getElementById('getStartedBtn');
+    const loginModalBg = document.getElementById('loginModalBg');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const loginForm = document.getElementById('loginForm');
+    const loginError = document.getElementById('loginError');
+
+    // Automatically open login modal on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      loginModalBg.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => {
+        document.getElementById('username').focus();
+      }, 200);
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+      loginModalBg.classList.remove('active');
+      document.body.style.overflow = '';
+      loginError.style.display = 'none';
+      loginForm.reset();
+    });
+
+    loginModalBg.addEventListener('click', (e) => {
+      if (e.target === loginModalBg) {
+        loginModalBg.classList.remove('active');
+        document.body.style.overflow = '';
+        loginError.style.display = 'none';
+        loginForm.reset();
+      }
+    });
+
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const username = loginForm.username.value.trim();
+      const password = loginForm.password.value;
+      // Check credentials against allowedUsers from users.js
+      const userMatch = allowedUsers.some(user => user.username === username && user.password === password);
+      if (userMatch) {
+        // Simulate login success
+        localStorage.setItem('loggedInUser', username);
+        window.location.href = 'main.html';
+      } else {
+        loginError.textContent = 'Invalid username or password.';
+        loginError.style.display = 'block';
+      }
+    });
+    // Optional: allow Enter to submit, Esc to close
+    document.addEventListener('keydown', function(e) {
+      if (loginModalBg.classList.contains('active')) {
+        if (e.key === 'Escape') {
+          loginModalBg.classList.remove('active');
+          document.body.style.overflow = '';
+          loginError.style.display = 'none';
+          loginForm.reset();
+        }
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home - BrandName</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div class="logo">Nigam</div>
+      <nav class="nav-links">
+        <a href="main.html" class="nav-link nav-active">Home</a>
+        <a href="links.html" class="nav-link">Links</a>
+        <a href="#" class="nav-link">Files</a>
+      </nav>
+      <button class="cta-btn" id="logoutBtn">Exit</button>
+    </div>
+  </header>
+  <main>
+    <div class="profile-container">
+      <div class="profile-left">
+        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Nigam's Photo" class="profile-photo">
+        <h2 class="intro-name">Hi, I'm Nigam</h2>
+        <p class="intro-role">Web Enthusiast & Learner</p>
+      </div>
+      <div class="profile-right">
+        <p class="intro-welcome">Welcome to my portal! I’m glad you’re here. Explore the links above to see what I’m working on and feel free to connect with me. Have a great day!</p>
+      </div>
+    </div>
+  </main>
+  <footer>
+    &copy; 2024 BrandName. All rights reserved.
+  </footer>
+  <script>
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+      window.location.href = 'abc.html';
+    });
+  </script>
+</body>
+</html>
