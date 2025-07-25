@@ -4,117 +4,99 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Modern Landing Page</title>
-  <style>
-    :root {
-      --primary: #6366f1;
-      --secondary: #f1f5f9;
-      --accent: #06b6d4;
-      --text: #1e293b;
-      --bg: #fff;
-    }
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
-      background: var(--secondary);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    header {
-      width: 100%;
-      padding: 2rem 0 0 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: transparent;
-    }
-    .logo {
-      font-size: 2rem;
-      font-weight: bold;
-      color: var(--primary);
-      letter-spacing: 2px;
-    }
-    main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-      text-align: center;
-    }
-    .hero-title {
-      font-size: 2.8rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      color: var(--text);
-      line-height: 1.1;
-    }
-    .hero-subtitle {
-      font-size: 1.3rem;
-      color: #64748b;
-      margin-bottom: 2rem;
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .cta-btn {
-      background: linear-gradient(90deg, var(--primary), var(--accent));
-      color: #fff;
-      padding: 0.9rem 2.2rem;
-      border: none;
-      border-radius: 2rem;
-      font-size: 1.1rem;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 4px 24px rgba(99,102,241,0.15);
-      transition: background 0.2s, transform 0.2s;
-    }
-    .cta-btn:hover {
-      background: linear-gradient(90deg, var(--accent), var(--primary));
-      transform: translateY(-2px) scale(1.04);
-    }
-    .hero-image {
-      margin-top: 2.5rem;
-      width: 100%;
-      max-width: 480px;
-      border-radius: 1.5rem;
-      box-shadow: 0 8px 32px rgba(99,102,241,0.10);
-      object-fit: cover;
-    }
-    footer {
-      text-align: center;
-      padding: 1.5rem 0 1rem 0;
-      color: #94a3b8;
-      font-size: 1rem;
-    }
-    @media (max-width: 600px) {
-      .hero-title {
-        font-size: 2rem;
-      }
-      .hero-image {
-        max-width: 95vw;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <div class="logo">BrandName</div>
-  </header>
+  
+
+
   <main>
-    <h1 class="hero-title">Welcome to Your Modern Landing Page</h1>
-    <p class="hero-subtitle">Build your online presence with a beautiful, responsive, and modern landing page. Start your journey with us today and make your brand stand out.</p>
-    <button class="cta-btn">Get Started</button>
-    <img class="hero-image" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="Modern workspace">
-  </main>
+    <!-- <button class="cta-btn" id="getStartedBtn">Login</button> -->
+  
   <footer>
-    &copy; 2024 BrandName. All rights reserved.
+    &copy; 2024 NigamRealm. All rights reserved.
   </footer>
+
+  <!-- Login Modal -->
+  <div class="modal-bg" id="loginModalBg">
+    <div class="modal">
+      <button class="close-modal" id="closeModalBtn" title="Close">&times;</button>
+      <h2>Login</h2>
+      <form id="loginForm" autocomplete="off">
+        <div>
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" required autofocus>
+        </div>
+        <div>
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required>
+        </div>
+        <div class="error-msg" id="loginError" style="display:none;"></div>
+        <button type="submit" class="login-btn">Login</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="users.js"></script>
+  <script>
+    // Modal logic
+    // const getStartedBtn = document.getElementById('getStartedBtn');
+    const loginModalBg = document.getElementById('loginModalBg');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const loginForm = document.getElementById('loginForm');
+    const loginError = document.getElementById('loginError');
+
+    // Automatically open login modal on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      loginModalBg.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => {
+        document.getElementById('username').focus();
+      }, 200);
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+      loginModalBg.classList.remove('active');
+      document.body.style.overflow = '';
+      loginError.style.display = 'none';
+      loginForm.reset();
+    });
+
+    loginModalBg.addEventListener('click', (e) => {
+      if (e.target === loginModalBg) {
+        loginModalBg.classList.remove('active');
+        document.body.style.overflow = '';
+        loginError.style.display = 'none';
+        loginForm.reset();
+      }
+    });
+
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const username = loginForm.username.value.trim();
+      const password = loginForm.password.value;
+      // Check credentials against allowedUsers from users.js
+      const userMatch = allowedUsers.some(user => user.username === username && user.password === password);
+      if (userMatch) {
+        // Simulate login success
+        localStorage.setItem('loggedInUser', username);
+        window.location.href = 'main.html';
+      } else {
+        loginError.textContent = 'Invalid username or password.';
+        loginError.style.display = 'block';
+      }
+    });
+    // Optional: allow Enter to submit, Esc to close
+    document.addEventListener('keydown', function(e) {
+      if (loginModalBg.classList.contains('active')) {
+        if (e.key === 'Escape') {
+          loginModalBg.classList.remove('active');
+          document.body.style.overflow = '';
+          loginError.style.display = 'none';
+          loginForm.reset();
+        }
+      }
+    });
+  </script>
 </body>
 </html>
